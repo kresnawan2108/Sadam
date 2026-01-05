@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Peduli Bumi</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: white;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .bg {
+        position: fixed;
+        inset: 0;
+        z-index: -3;
+        background: linear-gradient(135deg, #050b14, #071a1a, #061f1c);
+        transition: opacity 4s ease;
+      }
+
+      .bg.active {
+        opacity: 0;
+      }
+
+      .bg2 {
+        position: fixed;
+        inset: 0;
+        z-index: -4;
+        background: linear-gradient(135deg, #0f766e, #22c55e, #86efac);
+        opacity: 0;
+        transition: opacity 4s ease;
+      }
+
+      .bg2.active {
+        opacity: 1;
+      }
+
+      .particles {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(200, 255, 240, 0.9),
+          rgba(200, 255, 240, 0.25),
+          transparent 70%
+        );
+        opacity: 0.4;
+        filter: blur(1px);
+        animation: float linear infinite;
+      }
+
+      @keyframes float {
+        from {
+          transform: translateY(0) scale(0.6);
+          opacity: 0;
+        }
+        20% {
+          opacity: 0.5;
+        }
+        to {
+          transform: translateY(-140vh) scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      .blob {
+        position: absolute;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        filter: blur(150px);
+        opacity: 0.55;
+        z-index: 0;
+        animation: blobMove 28s infinite alternate ease-in-out;
+      }
+
+      .blob.one {
+        background: linear-gradient(135deg, #00f5a0, #00d9f5);
+        top: -220px;
+        left: -220px;
+      }
+
+      .blob.two {
+        background: linear-gradient(135deg, #bbf7d0, #22c55e);
+        bottom: -220px;
+        right: -220px;
+        animation-duration: 34s;
+      }
+
+      @keyframes blobMove {
+        to {
+          transform: translate(280px, 180px);
+        }
+      }
+
+      .container {
+        position: relative;
+        z-index: 2;
+        min-height: 120vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 30px;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(22px);
+        border-radius: 36px;
+        padding: 75px 65px;
+        max-width: 560px;
+        text-align: center;
+        box-shadow: 0 45px 90px rgba(0, 0, 0, 0.45);
+        animation: fadeUp 1.6s ease;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(60px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .pulse {
+        font-size: 100px;
+        animation: pulse 3.2s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        50% {
+          transform: scale(1.18);
+        }
+      }
+
+      h2 {
+        font-size: 44px;
+        letter-spacing: 5px;
+        margin: 30px 0 10px;
+        font-weight: 700;
+      }
+
+      h2 span {
+        background: linear-gradient(90deg, #38bdf8, #7dd3fc, #e0f2fe, #ffffff);
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      p {
+        margin: 28px 0 18px;
+        line-height: 2;
+        font-size: 17px;
+        opacity: 0.95;
+      }
+
+      .note {
+        font-size: 14px;
+        opacity: 0.75;
+        margin-bottom: 45px;
+      }
+
+      .btn {
+        padding: 22px 70px;
+        border: none;
+        border-radius: 80px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #042d26;
+        background: linear-gradient(135deg, #9fffd8, #6be8ff, #ffe8a3);
+        transition: 0.6s ease;
+      }
+
+      .btn:hover {
+        transform: scale(1.12);
+      }
+
+      .btn.clicked {
+        animation: clickPulse 0.6s ease;
+      }
+
+      @keyframes clickPulse {
+        50% {
+          transform: scale(0.92);
+        }
+      }
+
+      .btn:disabled {
+        background: linear-gradient(135deg, #bbf7d0, #86efac);
+        cursor: default;
+      }
+
+      .result {
+        margin-top: 50px;
+        opacity: 0;
+        transform: translateY(35px);
+        transition: 1.2s ease;
+      }
+
+      .result.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .result span {
+        font-size: 56px;
+        display: block;
+        margin-bottom: 12px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="bg" id="bg1"></div>
+    <div class="bg2" id="bg2"></div>
+
+    <div class="particles" id="particles"></div>
+
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+
+    <div class="container">
+      <div class="card">
+        <div class="pulse">🌍</div>
+
+        <h2>PEDULI <span>BUMI</span></h2>
+
+        <p>
+          Bumi adalah rumah kita bersama yang harus dijaga agar tetap lestari.
+          Kerusakan lingkungan terjadi akibat kurangnya kepedulian manusia. Mari
+          mulai dari hal kecil seperti mengurangi sampah dan menjaga kebersihan,
+          karena menjaga bumi berarti menjaga masa depan.
+        </p>
+
+        <div class="note">Bumi tidak butuh kita, kitalah yang butuh bumi</div>
+
+        <button class="btn" id="btn" onclick="aksi()">Saya Peduli</button>
+
+        <div class="result" id="hasil">
+          Terima kasih telah memilih untuk peduli
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const particleBox = document.getElementById("particles");
+      const TOTAL_PARTICLE = 90;
+
+      for (let i = 0; i < TOTAL_PARTICLE; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        resetParticle(p);
+        particleBox.appendChild(p);
+
+        p.addEventListener("animationend", () => {
+          resetParticle(p);
+        });
+      }
+
+      function resetParticle(p) {
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.top = Math.random() * 100 + "vh";
+        p.style.animationDuration = 16 + Math.random() * 20 + "s";
+        p.style.animationDelay = Math.random() * 4 + "s";
+      }
+
+      function aksi() {
+        const btn = document.getElementById("btn");
+        btn.classList.add("clicked");
+        btn.innerText = "Terima Kasih";
+        btn.disabled = true;
+
+        document.getElementById("bg1").classList.add("active");
+        document.getElementById("bg2").classList.add("active");
+        document.getElementById("hasil").classList.add("show");
+      }
+    </script>
+  </body>
+</html>
